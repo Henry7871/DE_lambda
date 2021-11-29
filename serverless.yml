@@ -1,0 +1,88 @@
+service: de-project
+
+plugins:
+  - serverless-python-requirements
+  - serverless-dotenv-plugin
+  - serverless-iam-roles-per-function
+
+custom:
+  
+
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  runtime: python3.8
+  region: ${env:region}
+  profile: ${env:Profile_name}
+  stage: ${env:stage}
+  deploymentBucket:
+    name: ${env:deploymentBucket}
+    maxPreviousDeploymentArtifacts: 3
+
+
+functions:
+  crawler_trigger:
+    handler: crawler.trigger
+    memorySize: 256
+    timeout: 300
+    iamRoleStatements:
+      - Effect: "Allow"        
+        Action:
+          - glue:*    
+        Resource: 
+          - "*"
+    events:
+      - s3:
+          bucket: ${env:Project_bucket}
+          event: s3:ObjectCreated:*
+          rules:
+            - prefix: ${env:crawler_trigger_folder}
+            - suffix: .csv
+          existing: true
+  
+  glueETL_trigger:
+    handler: glueETL.trigger
+    memorySize: 256
+    timeout: 300
+    iamRoleStatements:
+      - Effect: "Allow"        
+        Action:
+          - glue:*    
+        Resource: 
+          - "*"
+    events:
+      - cloudwatchEvent:
+          event:
+            detail-type:
+              - Glue Crawler State Change
+            source:
+              - aws.glue
+            detail:
+              crawlerName:
+                - ${env:crawler_name}
+              state:
+                - Succeeded
+
+  fileTransfer_trigger:
+    handler: fileTransfer.trigger
+    memorySize: 256
+    timeout: 300
+    iamRoleStatements:
+      - Effect: "Allow"        
+        Action:
+          - s3:*    
+        Resource: 
+          - "*"
+    events:
+      - s3:
+          bucket: ${env:Project_bucket}
+          event: s3:ObjectCreated:*
+          rules:
+            - prefix: ${env:glue_job_output_folder}
+            - suffix: .csv
+          existing: true
+
+  
+
+
