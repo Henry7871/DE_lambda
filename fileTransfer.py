@@ -9,7 +9,7 @@ s3_client = boto3.client('s3')
 tz_sydney = timezone(os.environ['TZ_LOCAL'])
 date = datetime.now(tz_sydney).strftime("%Y-%m-%d")
 
-def trigger(event, context):
+def run(event, context):
     records = event['Records']
     for record in records:
         src_bucket = record['s3']['bucket']['name']

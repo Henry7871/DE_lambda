@@ -1,12 +1,12 @@
 import json
 import boto3
 import os
-import logging
+
 
 glue_client = boto3.client('glue')
 crawler_name = os.environ['crawler_name'] 
 
-def trigger(event, context):
+def run(event, context):
     
     try:
         glue_client.start_crawler(
@@ -14,4 +14,4 @@ def trigger(event, context):
         )
     except Exception as e:
         if e.response['Error']['Code'] == 'EntityNotFoundException':
-            print(f'Crawler {crawler_name} was not found, plase recheck the crawler name')
+            print(f'Crawler {crawler_name} was not found, please recheck the crawler name')

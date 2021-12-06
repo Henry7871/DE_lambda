@@ -1,13 +1,9 @@
-service: de-project
+service: new-de-project
 
 plugins:
   - serverless-python-requirements
   - serverless-dotenv-plugin
   - serverless-iam-roles-per-function
-
-custom:
-  
-
 frameworkVersion: '2'
 
 provider:
@@ -23,7 +19,8 @@ provider:
 
 functions:
   crawler_trigger:
-    handler: crawler.trigger
+    handler: crawler.run
+    name: ${env:crawler_trigger_name}
     memorySize: 256
     timeout: 300
     iamRoleStatements:
@@ -40,15 +37,16 @@ functions:
             - prefix: ${env:crawler_trigger_folder}
             - suffix: .csv
           existing: true
-  
-  glueETL_trigger:
-    handler: glueETL.trigger
+
+  stepfunction_trigger:
+    handler: stepfunction.run
+    name: ${env:stepfunction_trigger_name}
     memorySize: 256
     timeout: 300
     iamRoleStatements:
       - Effect: "Allow"        
         Action:
-          - glue:*    
+          - states:StartExecution  
         Resource: 
           - "*"
     events:
@@ -63,9 +61,35 @@ functions:
                 - ${env:crawler_name}
               state:
                 - Succeeded
-
+  
+  glueETL_trigger:
+    handler: glueETL.run
+    name: ${env:glueETL_trigger_name}
+    memorySize: 256
+    timeout: 300
+    iamRoleStatements:
+      - Effect: "Allow"        
+        Action:
+          - glue:*    
+        Resource: 
+          - "*"
+    events:
+      - cloudwatchEvent:
+          event:
+            source:
+            - aws.states
+            detail-type:
+            - Step Functions Execution Status Change
+            detail:
+              status:
+              - SUCCEEDED
+              stateMachineArn:
+              - !Ref MyStateMachine
+              - ''   
+              
   fileTransfer_trigger:
-    handler: fileTransfer.trigger
+    handler: fileTransfer.run
+    name: ${env:fileTransfer_name}
     memorySize: 256
     timeout: 300
     iamRoleStatements:
@@ -82,6 +106,176 @@ functions:
             - prefix: ${env:glue_job_output_folder}
             - suffix: .csv
           existing: true
+
+  remove_feature_files:
+    handler: remove_feature_files.run
+    name: ${env:remove_feature_files_name}
+    memorySize: 256
+    timeout: 300
+    iamRoleStatements:
+      - Effect: "Allow"        
+        Action:
+          - s3:*    
+        Resource: 
+          - "*"
+  
+
+  exe_query_order_products_prior:
+    handler: exe_query_order_products_prior.run
+    name: ${env:order_products_prior_name}
+    memorySize: 256
+    timeout: 300
+    iamRoleStatements:
+      - Effect: "Allow"        
+        Action:
+          - s3:* 
+          - athena:* 
+          - glue:*  
+        Resource: 
+          - "*"
+
+  exe_query_user_features_1:
+    handler: exe_query_user_features_1.run
+    name: ${env:user_features_1_name}
+    memorySize: 256
+    timeout: 300
+    iamRoleStatements:
+      - Effect: "Allow"        
+        Action:
+          - s3:* 
+          - athena:* 
+          - glue:*  
+        Resource: 
+          - "*"
+
+  exe_query_user_features_2:
+    handler: exe_query_user_features_2.run
+    name: ${env:user_features_2_name}
+    memorySize: 256
+    timeout: 300
+    iamRoleStatements:
+      - Effect: "Allow"        
+        Action:
+          - s3:* 
+          - athena:* 
+          - glue:*  
+        Resource: 
+          - "*"
+
+  exe_query_up_features:
+    handler: exe_query_up_features.run
+    name: ${env:up_features_name}
+    memorySize: 256
+    timeout: 300
+    iamRoleStatements:
+      - Effect: "Allow"        
+        Action:
+          - s3:* 
+          - athena:* 
+          - glue:*  
+        Resource: 
+          - "*"
+
+  exe_query_prd_features:
+    handler: exe_query_prd_features.run
+    name: ${env:prd_features_name}
+    memorySize: 256
+    timeout: 300
+    iamRoleStatements:
+      - Effect: "Allow"        
+        Action:
+          - s3:* 
+          - athena:* 
+          - glue:*  
+        Resource: 
+          - "*"
+
+
+
+resources:
+  Description: recources related to lambda functions
+  Resources:
+    MyStateMachine:
+      Type: AWS::StepFunctions::StateMachine
+      Properties:
+        StateMachineName: ${env:stepfunction_name}
+        DefinitionString: !Sub |-
+          {
+            "Comment": "Step function to run imba process",
+            "StartAt": "remove_feature_files",
+            "States": {
+              "remove_feature_files": {
+                "Type": "Task",
+                "Resource": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${env:remove_feature_files_name}:$LATEST",
+                "ResultPath": "$.remove_feature_files",
+                "Next": "exe_query_order_products_prior",
+                "TimeoutSeconds": 60
+              },
+              "exe_query_order_products_prior": {
+                "Type": "Task",
+                "Resource": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${env:order_products_prior_name}:$LATEST",
+                "ResultPath": "$.exe_query_order_products_prior",
+                "Next": "exe_query_user_features_1",
+                "TimeoutSeconds": 60
+              },
+              "exe_query_user_features_1": {
+                "Type": "Task",
+                "Resource": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${env:user_features_1_name}:$LATEST",
+                "ResultPath": "$.exe_query_user_features_1",
+                "Next": "exe_query_user_features_2",
+                "TimeoutSeconds": 60
+              },
+              "exe_query_user_features_2": {
+                "Type": "Task",
+                "Resource": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${env:user_features_2_name}:$LATEST",
+                "ResultPath": "$.exe_query_user_features_2",
+                "Next": "exe_query_up_features",
+                "TimeoutSeconds": 60
+              },
+              "exe_query_up_features": {
+                "Type": "Task",
+                "Resource": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${env:up_features_name}:$LATEST",
+                "ResultPath": "$.exe_query_up_features",
+                "Next": "exe_query_prd_features",
+                "TimeoutSeconds": 60
+              },
+              "exe_query_prd_features": {
+                "Type": "Task",
+                "Resource": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${env:prd_features_name}:$LATEST",
+                "ResultPath": "$.exe_query_up_features",
+                "TimeoutSeconds": 60,
+                "End": true
+              }
+            }
+          }
+        RoleArn: !GetAtt Stepfunctionrole.Arn
+      
+    Stepfunctionrole:
+      Type: AWS::IAM::Role
+      Properties:
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service:
+                  - states.amazonaws.com
+              Action: sts:AssumeRole
+        Path: "/"
+        Policies:
+          - PolicyName: StatesExecutionPolicy
+            PolicyDocument:
+              Version: "2012-10-17"
+              Statement:
+                - Effect: Allow
+                  Action:
+                    - lambda:*
+                    - xray:*
+                  Resource: "*"
+
+
+      
+
 
   
 
