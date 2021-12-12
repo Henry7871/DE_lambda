@@ -43,5 +43,11 @@ npm i -D serverless-dotenv-plugin
 npm install --save-dev serverless-iam-roles-per-function
 ```
 
+Presentation slides:
 
+https://www.canva.com/design/DAEyUfUVFIU/share/preview?token=ZxtD5B8K0Eqv7hmikCYBPA&role=EDITOR&utm_content=DAEyUfUVFIU&utm_campaign=designshare&utm_medium=link&utm_source=sharebutton
+
+
+Jenkins: 
+http://d1fcf0fdff6a.ngrok.io/
 
