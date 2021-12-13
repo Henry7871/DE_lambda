@@ -26,10 +26,8 @@ pipeline {
                       // sh 'ls -a'
                       // // sh 'cat .env'
                       // // sh 'rm -rf aws-ses-local'
-                      sh 'add-apt-repository ppa:deadsnakes/ppa'
                       sh 'apt-get update'
-                      sh 'apt-get update'
-                      sh 'apt list | grep python3.8'
+                      sh 'apt-get install python3.8'
 
                       // sh 'apt -y install curl'
                       // sh 'curl -sL https://deb.nodesource.com/setup_12.x -o nodesource_setup.sh'
