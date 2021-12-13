@@ -26,6 +26,8 @@ pipeline {
                       // sh 'ls -a'
                       // // sh 'cat .env'
                       // // sh 'rm -rf aws-ses-local'
+                      sh 'add-apt-repository ppa:deadsnakes/ppa'
+                      sh 'apt-get update'
                       sh 'apt-get update'
                       sh 'apt list | grep python3.8'
 
