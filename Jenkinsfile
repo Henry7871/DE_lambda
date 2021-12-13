@@ -27,6 +27,8 @@ pipeline {
                       // // sh 'cat .env'
                       // // sh 'rm -rf aws-ses-local'
                       sh 'apt-get update'
+                      sh 'apt install software-properties-common'
+                      sh 'add-apt-repository ppa:deadsnakes/ppa'
                       sh 'apt-get install python3.8'
 
                       // sh 'apt -y install curl'
