@@ -22,25 +22,36 @@ pipeline {
         
         stage('preparation before deloy'){
             steps{
-                  withAWS(credentials: 'cathyawscredentials', region:'ap-southeast-2'){ 
+                  withAWS(credentials: '8058ad1c-fdf5-4ae4-b62d-a0127bcd6006', region:'ap-southeast-2'){ 
                       sh 'ls -a'
-                      sh 'cat .env'
-                      sh 'rm -rf aws-ses-local'
+                      // sh 'cat .env'
+                      // sh 'rm -rf aws-ses-local'
                       sh 'apt-get update'
                       sh 'apt -y install curl'
-                      sh 'curl -sL https://deb.nodesource.com/setup_14.x -o nodesource_setup.sh'
+                      sh 'curl -sL https://deb.nodesource.com/setup_12.x -o nodesource_setup.sh'
                       sh 'bash nodesource_setup.sh'
                       sh 'apt install nodejs'
                       sh 'npm install'
-                    //   sh 'mkdir -p ~/.docker/cli-plugins/'
-                    //   sh 'curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose'
-                    //   sh 'chmod +x /usr/local/bin/docker-compose'
-                    //   sh 'docker-compose version'
-                    //   sh 'curl -fsSL https://get.docker.com -o get-docker.sh'
-                    //   sh 'sh get-docker.sh'
-                    //   sh 'npm i python'
-                    //   sh 'apt-get -y install python3-pip'
-                    //   sh 'pip install aws'
+                      // sh 'mkdir -p ~/.docker/cli-plugins/'
+                      // sh 'curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose'
+                      // sh 'chmod +x /usr/local/bin/docker-compose'
+                      // sh 'docker-compose version'
+                      // sh 'curl -fsSL https://get.docker.com -o get-docker.sh'
+                      // sh 'sh get-docker.sh'
+                      sh 'npm i python'
+                      sh 'apt-get -y install python3-pip'
+                      sh 'pip install aws'
+                      sh 'python3 --version'
+                      sh 'pip3 install -r requirements.txt'
+                      sh 'node -v'
+                      sh 'npm -v'
+                      sh 'npm install -g serverless'
+                      sh 'npm update -g serverless'
+                      sh 'serverless -v'
+                      sh 'sls plugin install -n serverless-python-requirements'
+                      sh 'npm i -D serverless-dotenv-plugin '
+                      sh 'npm install --save-dev serverless-iam-roles-per-function'
+                      sh 'sls deploy -v'
                     //   sh 'pip install awscli-local'
                     //   sh 'npm install aws-ses-local -g'
                     //   sh 'npm install jest'
@@ -50,37 +61,37 @@ pipeline {
         }      
                   
                  
-        stage('zip files') {
-            steps{
-                sh 'apt-get update'
-                sh 'apt-get -y install zip'
-                sh 'zip  lambda-jk-tf-test7.zip src/index.js node_modules/dotenv src/helpers/templateHelper.js src/helpers/emailHelper.js'
-                sh 'ls -a'
-                sh 'pwd lambda-jk-tf-test7.zip'
-                withAWS(credentials: 'cathyawscredentials', region:'ap-southeast-2'){ 
-                sh 'aws s3 cp lambda-jk-tf-test7.zip s3://jk-tf-s3-test7/lambda-functions/lambda-jk-tf-test7.zip'
-                }
-                  }
-        }
+    //     stage('zip files') {
+    //         steps{
+    //             sh 'apt-get update'
+    //             sh 'apt-get -y install zip'
+    //             sh 'zip  lambda-jk-tf-test7.zip src/index.js node_modules/dotenv src/helpers/templateHelper.js src/helpers/emailHelper.js'
+    //             sh 'ls -a'
+    //             sh 'pwd lambda-jk-tf-test7.zip'
+    //             withAWS(credentials: '8058ad1c-fdf5-4ae4-b62d-a0127bcd6006', region:'ap-southeast-2'){ 
+    //             sh 'aws s3 cp lambda-jk-tf-test7.zip s3://jk-tf-s3-test7/lambda-functions/lambda-jk-tf-test7.zip'
+    //             }
+    //               }
+    //     }
         
-        stage('Terraform Init') {
-            steps{
-                sh 'terraform init'
-                  }
-        }
-        stage('Terraform plan') {
-            steps{
-                withAWS(credentials: 'cathyawscredentials', region:'ap-southeast-2'){  
-                    sh 'terraform plan -out=tfplan -input=false'
-            }
-        }
-    }
-        stage('Terraform apply'){
-            steps{
-                withAWS(credentials: 'cathyawscredentials', region:'ap-southeast-2'){
-                    sh "terraform apply -input=false tfplan"
-                }
-            }            
-        }
+    //     stage('Terraform Init') {
+    //         steps{
+    //             sh 'terraform init'
+    //               }
+    //     }
+    //     stage('Terraform plan') {
+    //         steps{
+    //             withAWS(credentials: '8058ad1c-fdf5-4ae4-b62d-a0127bcd6006', region:'ap-southeast-2'){  
+    //                 sh 'terraform plan -out=tfplan -input=false'
+    //         }
+    //     }
+    // }
+    //     stage('Terraform apply'){
+    //         steps{
+    //             withAWS(credentials: '8058ad1c-fdf5-4ae4-b62d-a0127bcd6006', region:'ap-southeast-2'){
+    //                 sh "terraform apply -input=false tfplan"
+    //             }
+    //         }            
+    //     }
     }
 }
