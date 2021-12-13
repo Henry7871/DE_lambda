@@ -42,7 +42,7 @@ pipeline {
                       sh 'apt-get -y install python3-pip'
                      
                       
-                      sh 'pip3 install -r requirements.txt'
+                      // sh 'pip3 install -r requirements.txt'
                       sh 'python3 --version'
                       sh 'node -v'
                       sh 'npm -v'
