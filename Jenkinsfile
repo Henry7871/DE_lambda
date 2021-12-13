@@ -39,7 +39,7 @@ pipeline {
                       // sh 'curl -fsSL https://get.docker.com -o get-docker.sh'
                       // sh 'sh get-docker.sh'
                       sh 'npm i python'
-                      sh 'apt-get -y install python3-pip'
+                      // sh 'apt-get -y install python3-pip'
                      
                       
                       // sh 'pip3 install -r requirements.txt'
