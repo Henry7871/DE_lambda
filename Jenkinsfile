@@ -44,7 +44,7 @@ pipeline {
                       sh 'python3 --version'
                       sh 'node -v'
                       sh 'npm -v'
-                      sh 'pip3 install --user pipenv'
+                      sh 'pip3 install pipenv'
                       sh 'pipenv install --python 3.8'
                       sh 'python3 --version'
                     //   sh 'npm install -g serverless'
