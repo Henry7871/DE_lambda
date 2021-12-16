@@ -38,14 +38,20 @@ pipeline {
                       // sh 'docker-compose version'
                       // sh 'curl -fsSL https://get.docker.com -o get-docker.sh'
                       // sh 'sh get-docker.sh'
-                      sh 'npm i python3'
+                      sh 'npm install --python=python3.8'
                       sh 'apt-get -y install python3-pip'                   
                       sh 'pip3 install -r requirements.txt'
                       sh 'python3 --version'
                       sh 'node -v'
                       sh 'npm -v'
-                      sh 'pip3 install pipenv'
-                      sh 'pip3 install --user pipenv'          
+                      // sh 'python3 -m venv tutorial-env'
+                      // sh 'source tutorial-env/bin/activate'
+                      
+
+
+
+                      // sh 'pip3 install pipenv'
+                      // sh 'pip3 install --user pipenv'          
                       sh 'pipenv install --python 3.8'
                       sh 'python3 --version'
                       // sh 'pip install virtualenv'
@@ -81,8 +87,7 @@ pipeline {
     //               }
     //     }
         
-    //     stage('Terraform Init') {
-    //         steps{
+    //     stage('Terraform Init') {    //         steps{
     //             sh 'terraform init'
     //               }
     //     }
