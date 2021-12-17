@@ -26,7 +26,7 @@ pipeline {
                       // sh 'ls -a'
                       // // sh 'cat .env'
                       // // sh 'rm -rf aws-ses-local'
-                      pip3 install -r requirements.txt
+                      sh 'pip3 install -r requirements.txt'
                       sh 'apt-get update && apt-get upgrade -y'
                       sh 'apt -y install curl'
                       sh 'curl –sL https://deb.nodesource.com/setup_12.x | -E bash -'
