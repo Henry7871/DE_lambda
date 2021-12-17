@@ -30,7 +30,7 @@ pipeline {
                       sh 'apt-get update && apt-get upgrade -y'
                       sh 'apt -y install curl'
                       sh 'curl -sL https://deb.nodesource.com/setup_12.x -o nodesource_setup.sh'
-                      sh 'apt install nodejs'
+                      sh 'apt install nodejs -y'
                       sh 'apt-get nodejs -y'
                       // sh 'npm install'
                       // // sh 'mkdir -p ~/.docker/cli-plugins/'
