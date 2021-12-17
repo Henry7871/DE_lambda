@@ -29,7 +29,7 @@ pipeline {
                       sh 'pip3 install -r requirements.txt'
                       sh 'apt-get update && apt-get upgrade -y'
                       sh 'apt -y install curl'
-                      sh 'curl –sL https://deb.nodesource.com/setup_12.x | -E bash -'
+                      sh 'curl -sL https://deb.nodesource.com/setup_12.x -o nodesource_setup.sh'
                       sh 'apt-get nodejs -y'
                       // sh 'apt install nodejs'
                       // sh 'npm install'
