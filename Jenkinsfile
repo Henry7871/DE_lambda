@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        docker {  image 'zenika/terraform-aws-cli:latest' }
+        docker {  image 'yfy668/python3.8:latest' }
     }
     // parameters {
     //     string(name: 'environment', defaultValue: 'default', description: 'Workspace/environment file to use for deployment')
