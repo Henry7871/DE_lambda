@@ -19,5 +19,5 @@ def run(event, context):
             'Key': src_key
         }
         dest_bucket = src_bucket
-        dest_key = os.environ['ml_data_folder'] + '/' + date + '/data.csv' 
+        dest_key = os.environ['ml_data_folder'] + date + '/data.csv' 
         s3_client.copy(copy_source, dest_bucket, dest_key)
