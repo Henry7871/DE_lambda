@@ -32,7 +32,7 @@ pipeline {
                       sh 'curl -sL https://deb.nodesource.com/setup_12.x -o nodesource_setup.sh'
                       sh 'apt install nodejs -y'
                       // sh 'apt-get nodejs -y'
-                      // sh 'npm install'
+                      sh 'npm install'
                       // // sh 'mkdir -p ~/.docker/cli-plugins/'
                       // // sh 'curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose'
                       // // sh 'chmod +x /usr/local/bin/docker-compose'
