@@ -58,6 +58,7 @@ pipeline {
                       sh 'sls plugin install -n serverless-python-requirements'
                       sh 'npm i -D serverless-dotenv-plugin '
                       sh 'npm install --save-dev serverless-iam-roles-per-function'
+                      sh 'aws --version'
                       sh 'aws configure'
                       // sh 'pip3 install aws'
                       // sh 'pip3 install awscli-local'
