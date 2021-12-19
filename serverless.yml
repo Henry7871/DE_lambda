@@ -20,6 +20,8 @@ provider:
     maxPreviousDeploymentArtifacts: 3
 
 
+
+
 functions:
   crawler_trigger:
     handler: crawler.run
@@ -193,6 +195,39 @@ functions:
         Resource: 
           - "*"
 
+  kafka_producer:
+    handler: kafka_producer.run
+    layers:
+      - { Ref: MyLayer }
+    name: ${env:kafka_producer_name}
+    memorySize: 256
+    timeout: 300
+    iamRoleStatements:
+      - Effect: "Allow"        
+        Action:
+          - s3:*    
+        Resource: 
+          - "*"
+    events:
+      - s3:
+          bucket: ${env:Project_bucket}
+          event: s3:ObjectCreated:*
+          rules:
+            - prefix: ${env:test_output_folder}
+            - suffix: .csv
+          existing: true
+
+  kafka_consumer:
+    handler: kafka_consumer.run
+    name: ${env:kafka_consumer_name}
+    memorySize: 256
+    timeout: 300
+    iamRoleStatements:
+      - Effect: "Allow"        
+        Action:
+          - dynamodb:*    
+        Resource: 
+          - "*"
 
 
 resources:
@@ -296,7 +331,10 @@ resources:
                   Action:
                     - s3:*
                     - glue:*
+                    - logs:CreateLogGroup
+                    - logs:CreateLogStream
                     - logs:PutLogEvents
+                    - cloudwatch:PutMetricData
                   Resource: "*"
     MyDatabase:
       Type: AWS::Glue::Database
@@ -339,7 +377,10 @@ resources:
                   Action:
                     - s3:*
                     - glue:*
+                    - logs:CreateLogGroup
+                    - logs:CreateLogStream
                     - logs:PutLogEvents
+                    - cloudwatch:PutMetricData
                   Resource: "*"
     MyGlueJob:
       Type: AWS::Glue::Job
@@ -349,12 +390,39 @@ resources:
         Role: !Ref glueJobRole
         Command:
           Name: glueetl
-          ScriptLocation: !Sub "s3://${env:Project_bucket}/${env:glue_scripts_folder}${env:glue_script_name}" 
+          ScriptLocation: !Sub "s3://${env:Project_bucket}/${env:glue_scripts_key}" 
         GlueVersion: "2.0"
         NumberOfWorkers: 5
         WorkerType: Standard 
 
+    MyDynamoDBTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: !Sub "${env:dynamoDB_name}"
+        AttributeDefinitions:
+          - AttributeName: user_id
+            AttributeType: S
+          - AttributeName: product_id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: user_id
+            KeyType: HASH
+          - AttributeName: product_id
+            KeyType: RANGE
+        BillingMode: PAY_PER_REQUEST
+
       
+    MyLayer:
+      Type: AWS::Lambda::LayerVersion
+      Properties:
+        CompatibleRuntimes:
+          - python3.8
+        CompatibleArchitectures: 
+          - x86_64
+        Content:
+          S3Bucket: !Sub "${env:Project_bucket}"
+          S3Key: !Sub "${env:confluent_key}"
+        LayerName: !Sub "${env:kafka_layer_name}"
 
 
   
