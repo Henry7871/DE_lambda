@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
     encrypt = true
-    bucket = "terraform-remote-state-storage-s3-holly"
+    bucket = "backend-bucket-DE-grp5"
     region = "ap-southeast-2"
     key = "./terraform.tfstate"
     profile = "default"

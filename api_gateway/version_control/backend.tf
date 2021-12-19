@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "backend-bucket" {
-    bucket = "backend-bucket-henrywakaka"
+    bucket = "backend-bucket-DE-grp5"
 
     versioning {
         enabled = true 

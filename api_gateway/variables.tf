@@ -13,3 +13,7 @@ variable "environment" {
   description = "the name of your environment, e.g. \"prod\""
   #default     = "PROD"
 }
+
+variable "s3_bucket" {
+    type = string
+}

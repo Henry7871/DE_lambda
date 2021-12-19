@@ -1,6 +1,6 @@
 # The "REST API" is the container for all of the other API Gateway objects we will create.
 resource "aws_api_gateway_rest_api" "example" {
-  name        = "ServerlessExample"
+  name        = "prediction_lambda_apigw"
   description = "Terraform Serverless Application Example"
 }
 
