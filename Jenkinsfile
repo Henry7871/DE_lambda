@@ -60,7 +60,7 @@ pipeline {
                       sh 'npm install --save-dev serverless-iam-roles-per-function'
                       // sh 'pip3 install aws'
                       // sh 'pip3 install awscli-local'
-                      // sh 'sls deploy -v'
+                      sh 'sls deploy -v'
                     //   // sh 'npm install aws-ses-local -g'
                     // // //   sh 'npm install jest'
                     // // //   sh 'chmod a+x ./end_to_end_test/setup-localtest.sh'
@@ -68,8 +68,19 @@ pipeline {
             }
         }      
                   
-                 
-    //     stage('zip files') {
+         stage('create S3 bucket') {
+    //         steps{
+    //             sh 'apt-get update'
+    //             sh 'apt-get -y install zip'
+    //             sh 'zip  lambda-jk-tf-test7.zip src/index.js node_modules/dotenv src/helpers/templateHelper.js src/helpers/emailHelper.js'
+    //             sh 'ls -a'
+    //             sh 'pwd lambda-jk-tf-test7.zip'
+    //             withAWS(credentials: '8058ad1c-fdf5-4ae4-b62d-a0127bcd6006', region:'ap-southeast-2'){ 
+    //             sh 'aws s3 cp lambda-jk-tf-test7.zip s3://jk-tf-s3-test7/lambda-functions/lambda-jk-tf-test7.zip'
+    //             }
+    //               }
+    //     }         
+        stage('upload files') {
     //         steps{
     //             sh 'apt-get update'
     //             sh 'apt-get -y install zip'
