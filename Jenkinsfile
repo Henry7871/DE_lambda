@@ -60,7 +60,6 @@ pipeline {
                       sh 'npm install --save-dev serverless-iam-roles-per-function'
                       sh 'pip3 install aws'
                       sh 'pip3 install awscli-local'
-                      sh 'where aws'
                       sh 'aws --version'
                       sh 'aws configure'
                       sh 'sls deploy -v'
