@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        docker {  image 'yfy668/aws-python3.8:v1.0.0' }
+        docker {  image 'yfy668/aws-python3.8:v1.0.1' }
     }
     // parameters {
     //     string(name: 'environment', defaultValue: 'default', description: 'Workspace/environment file to use for deployment')
