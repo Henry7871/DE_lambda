@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        docker {  image 'yfy668/serverless:latest' }
+        docker {  image 'yfy668/aws-python3.8:v1.0.0' }
     }
     // parameters {
     //     string(name: 'environment', defaultValue: 'default', description: 'Workspace/environment file to use for deployment')
@@ -43,9 +43,10 @@ pipeline {
                       // // sh 'npm install --python=python3.8'
                       // // sh 'apt-get -y install python3-pip'                   
                       // // sh 'pip3 install -r requirements.txt'
-                      // sh 'python3 --version'
-                      // sh 'node -v'
-                      // sh 'npm -v'
+                      sh 'python3 --version'
+                      sh 'node -v'
+                      sh 'npm -v'
+                      sh 'aws --version'
                       // // sh 'python3 -m venv tutorial-env'
                       // // sh 'source tutorial-env/bin/activate'
                       // // sh 'pip3 install pipenv'
