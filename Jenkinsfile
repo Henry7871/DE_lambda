@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        docker {  image 'yfy668/aws-python3.8:v1.0.1' }
+        docker {  image 'amazon/aws-sam-cli-build-image-python3.8' }
     }
     // parameters {
     //     string(name: 'environment', defaultValue: 'default', description: 'Workspace/environment file to use for deployment')
@@ -44,9 +44,9 @@ pipeline {
                       // // sh 'apt-get -y install python3-pip'                   
                       // // sh 'pip3 install -r requirements.txt'
                       sh 'python3 --version'
+                      sh 'aws --version'
                       sh 'node -v'
                       sh 'npm -v'
-                      sh 'aws --version'
                       // // sh 'python3 -m venv tutorial-env'
                       // // sh 'source tutorial-env/bin/activate'
                       // // sh 'pip3 install pipenv'
