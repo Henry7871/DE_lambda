@@ -31,8 +31,8 @@ pipeline {
                         sh 'terraform init && terraform validate && terraform plan -var="access_key=${AWS_ACCESS_KEY}" -var="secret_key=${AWS_SECRET_KEY}" -var="app_version=${currentBuild.number}" -var-file=default.tfvars'
                         sh 'ls -ltra'
                         sh 'terraform apply -var="access_key=$AWS_ACCESS_KEY" -var="secret_key=$AWS_SECRET_KEY" -var="app_version=${currentBuild.number}" -var-file=default.tfvars -auto-approve > aws.txt'
-                        }
-                        sh "terraform output > output.txt"
+                    }
+                    sh "terraform output > output.txt"
                 }
             }        
                 
