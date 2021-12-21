@@ -1,4 +1,4 @@
-app_version = "1.0.0"
+# app_version = "1.0.0"
 
 # access_key
 
