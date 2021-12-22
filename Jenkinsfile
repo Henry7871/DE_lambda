@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        docker {  image 'amazon/aws-sam-cli-build-image-nodejs10.x' }
+        docker {  image 'amazon/aws-sam-cli-build-image-nodejs12.x' }
     }
     // parameters {
     //     string(name: 'environment', defaultValue: 'default', description: 'Workspace/environment file to use for deployment')
