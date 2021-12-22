@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        docker {  image 'amazon/aws-sam-cli-build-image-python3.8' }
+        docker {  image 'amazon/aws-sam-cli-build-image-nodejs10.x' }
     }
     // parameters {
     //     string(name: 'environment', defaultValue: 'default', description: 'Workspace/environment file to use for deployment')
@@ -28,6 +28,7 @@ pipeline {
                       // // // sh 'rm -rf aws-ses-local'
                       // sh 'pip3 install -r requirements.txt'
                       // sh 'apt-get update && apt-get upgrade -y'
+                      sh 'pip3 install '
                       sh 'apt -y install curl'
                       sh 'curl -sL https://deb.nodesource.com/setup_12.x -o nodesource_setup.sh'
                       sh 'bash nodesource_setup.sh'
@@ -41,14 +42,15 @@ pipeline {
                       // // // sh 'curl -fsSL https://get.docker.com -o get-docker.sh'
                       // // // sh 'sh get-docker.sh'
                       // // sh 'npm install --python=python3.8'
-                      // // sh 'apt-get -y install python3-pip'                   
-                      sh 'pip3 install -r requirements.txt'
+                                   
+                     
                       sh 'apt-get update && apt-get upgrade -y'
                       sh 'apt-get install curl -y'
                       sh 'curl -sL https://deb.nodesource.com/setup_12.x -o nodesource_setup.sh'
                       sh 'bash nodesource_setup.sh'
                       sh 'apt install nodejs'
                       sh 'npm install'
+                      sh 'apt-get -y install python3-pip'   
                       sh 'python3 --version'
                       sh 'aws --version'
                       sh 'node -v'
@@ -59,6 +61,7 @@ pipeline {
                       // // sh 'pip3 install --user pipenv'          
                       // // sh 'pip install virtualenv'
                       // // sh 'virtualenv \path\to\env -p \path\to\python_install.exe'
+                      sh 'pip3 install -r requirements.txt'
                       sh 'npm install -g serverless'
                       sh 'npm update -g serverless'
                       sh 'serverless -v'
@@ -68,8 +71,6 @@ pipeline {
                       sh 'python3 --version'
                       sh 'node -v'
                       sh 'npm -v'
-                      sh 'pip3 install aws'
-                      sh 'pip3 install awscli-local'
                       sh 'aws --version'
                       sh 'aws configure'
                       sh 'sls deploy -v'
