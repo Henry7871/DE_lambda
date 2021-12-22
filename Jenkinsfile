@@ -36,6 +36,7 @@ pipeline {
                       // // // sh 'sh get-docker.sh'   
                       sh 'node -v'   
                       sh 'npm -v'
+                      sh 'aws --version'
                       sh 'curl -sL https://deb.nodesource.com/setup_12.x -o nodesource_setup.sh'
                       sh 'bash nodesource_setup.sh'
                       sh 'npm install'
