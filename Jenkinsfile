@@ -36,6 +36,7 @@ pipeline {
                       // // // sh 'sh get-docker.sh'   
                       sh 'node -v'          
                       sh 'npm install'
+                      sh 'npm i apt-get'
                       sh 'apt-get update && apt-get upgrade -y'
                       sh 'apt-get install curl -y'
                       sh 'curl -sL https://deb.nodesource.com/setup_12.x -o nodesource_setup.sh'
