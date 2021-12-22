@@ -42,7 +42,7 @@ pipeline {
                       // // // sh 'sh get-docker.sh'
                       // // sh 'npm install --python=python3.8'
                       // // sh 'apt-get -y install python3-pip'                   
-                      // // sh 'pip3 install -r requirements.txt'
+                      sh 'pip3 install -r requirements.txt'
                       sh 'apt-get update && apt-get upgrade -y'
                       sh 'apt-get install curl -y'
                       sh 'curl -sL https://deb.nodesource.com/setup_12.x -o nodesource_setup.sh'
