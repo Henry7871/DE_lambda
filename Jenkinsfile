@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        docker {  image 'amazon/aws-sam-cli-build-image-nodejs12.x' }
+        docker {  image 'yfy668/serverless:v1.0.2' }
     }
     // parameters {
     //     string(name: 'environment', defaultValue: 'default', description: 'Workspace/environment file to use for deployment')
@@ -30,32 +30,19 @@ pipeline {
                       sh 'pip3 --version'
                       sh 'python3 --version'
                       sh 'aws --version'
-                      sh 'npm install apt-get'
-                      sh 'pip install apt-wrapper'
-                      sh 'apt-get update && apt-get upgrade -y'
-                      sh 'apt-get install curl -y'
-                      sh 'apt-get -y install python3-pip'                  
-                      sh 'aws --version'
-                      sh 'node -v'
-                      sh 'npm -v'
                       // // sh 'python3 -m venv tutorial-env'
                       // // sh 'source tutorial-env/bin/activate'
                       // // sh 'pip3 install pipenv'
                       // // sh 'pip3 install --user pipenv'          
                       // // sh 'pip install virtualenv'
                       // // sh 'virtualenv \path\to\env -p \path\to\python_install.exe'
-                      sh 'pip3 install -r requirements.txt'
-                      sh 'npm install -g serverless'
-                      sh 'npm update -g serverless'
-                      sh 'serverless -v'
+                      // sh 'pip3 install -r requirements.txt'
+                      // sh 'npm install -g serverless'
+                      // sh 'npm update -g serverless'
+                      // sh 'serverless -v'
                       sh 'sls plugin install -n serverless-python-requirements'
                       sh 'npm i -D serverless-dotenv-plugin '
                       sh 'npm install --save-dev serverless-iam-roles-per-function'
-                      sh 'python3 --version'
-                      sh 'node -v'
-                      sh 'npm -v'
-                      sh 'aws --version'
-                      sh 'aws configure'
                       sh 'sls deploy -v'
                     //   // sh 'npm install aws-ses-local -g'
                     // // //   sh 'npm install jest'
