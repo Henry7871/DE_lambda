@@ -42,9 +42,8 @@ pipeline {
                       sh 'sls plugin install -n serverless-python-requirements'
                       sh 'npm i -D serverless-dotenv-plugin '
                       sh 'npm install --save-dev serverless-iam-roles-per-function'
-                      sh 'pip3 install awscli --upgrade'
-                      sh 'cat .aws/credentials'
-            }
+                      // sh 'pip3 install awscli --upgrade'
+                                  }
         }      
                   
         //  stage('create S3 bucket and upload files') {
