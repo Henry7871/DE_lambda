@@ -42,6 +42,11 @@ pipeline {
                       sh 'sls plugin install -n serverless-python-requirements'
                       sh 'npm i -D serverless-dotenv-plugin '
                       sh 'npm install --save-dev serverless-iam-roles-per-function'
+                      sh 'aws configure set region ap-southeast-2 --profile cathy'
+                      sh 'aws configure set Access Key ID AKIAYGZOWLRZBPLUI5NK --profile cathy '
+                      sh 'aws configure set Secret Access Key 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 --profile cathy'
+                      sh 'aws configure set output format json --profile cathy'
+
                       // sh 'pip3 install awscli --upgrade'
                                   }
         }      
