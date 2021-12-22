@@ -24,11 +24,11 @@ pipeline {
             steps{ 
                       // // sh 'ls -a'
                       // // // sh 'cat .env'
-                      sh 'node -v'   
-                      sh 'npm -v'
-                      sh 'pip3 --version'
-                      sh 'python3 --version'
-                      sh 'aws --version'
+                      // sh 'node -v'   
+                      // sh 'npm -v'
+                      // sh 'pip3 --version'
+                      // sh 'python3 --version'
+                      // sh 'aws --version'
                       // // sh 'python3 -m venv tutorial-env'
                       // // sh 'source tutorial-env/bin/activate'
                       // // sh 'pip3 install pipenv'
@@ -45,28 +45,23 @@ pipeline {
             }
         }      
                   
-         stage('create S3 bucket') {
-            steps{
-                withAWS(credentials: '461f9b14-52bf-4989-8852-9e0988783409', region:'ap-southeast-2'){ 
-                // sh 'aws s3api create-bucket --bucket=imba-xqf --region=ap-southeast-2 --create-bucket-configuration LocationConstraint=ap-southeast-2'
-                sh 'aws s3 cp files/glue_job.py s3://imba-xqf/scripts/glue_job.py'
-                sh 'aws s3 cp files/confluent.zip s3://imba-xqf/confluent/confluent.zip'
-                }
-                  }
-        }         
-
-        // stage('upload files') {
+        //  stage('create S3 bucket and upload files') {
         //     steps{
-    //             sh 'apt-get update'
-    //             sh 'apt-get -y install zip'
-    //             sh 'zip  lambda-jk-tf-test7.zip src/index.js node_modules/dotenv src/helpers/templateHelper.js src/helpers/emailHelper.js'
-    //             sh 'ls -a'
-    //             sh 'pwd lambda-jk-tf-test7.zip'
-    //             withAWS(credentials: '8058ad1c-fdf5-4ae4-b62d-a0127bcd6006', region:'ap-southeast-2'){ 
-    //             sh 'aws s3 cp lambda-jk-tf-test7.zip s3://jk-tf-s3-test7/lambda-functions/lambda-jk-tf-test7.zip'
-    //             }
+        //         withAWS(credentials: '461f9b14-52bf-4989-8852-9e0988783409', region:'ap-southeast-2'){ 
+        //         sh 'aws s3api create-bucket --bucket=imba-xqf --region=ap-southeast-2 --create-bucket-configuration LocationConstraint=ap-southeast-2'
+        //         sh 'aws s3 cp files/glue_job.py s3://imba-xqf/scripts/glue_job.py'
+        //         sh 'aws s3 cp files/confluent.zip s3://imba-xqf/confluent/confluent.zip'
+        //         }
         //           }
-        // }
+        // }         
+
+        stage('serverless deploy') {
+            steps{
+                   withAWS(credentials: '461f9b14-52bf-4989-8852-9e0988783409', region:'ap-southeast-2'){
+                sh 'sls deploy -v'
+                  }
+                    }
+        }
         
     //     stage('Terraform Init') {    //         steps{
     //             sh 'terraform init'
