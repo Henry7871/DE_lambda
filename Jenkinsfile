@@ -43,7 +43,7 @@ pipeline {
                       sh 'npm i -D serverless-dotenv-plugin '
                       sh 'npm install --save-dev serverless-iam-roles-per-function'
                       sh 'pip3 install awscli --upgrade'
-                      sh 'cat ~/.aws/credentials'
+                      sh 'cat .aws/credentials'
             }
         }      
                   
