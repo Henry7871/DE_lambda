@@ -43,6 +43,7 @@ pipeline {
                       sh 'sls plugin install -n serverless-python-requirements'
                       sh 'npm i -D serverless-dotenv-plugin '
                       sh 'npm install --save-dev serverless-iam-roles-per-function'
+                      sh 'aws configure'
                       sh 'sls deploy -v'
                     //   // sh 'npm install aws-ses-local -g'
                     // // //   sh 'npm install jest'
