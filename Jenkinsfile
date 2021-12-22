@@ -60,9 +60,9 @@ pipeline {
 
         stage('serverless deploy') {
             steps{
-                   withAWS(credentials: '461f9b14-52bf-4989-8852-9e0988783409', region:'ap-southeast-2'){
+                   // withAWS(credentials: '461f9b14-52bf-4989-8852-9e0988783409', region:'ap-southeast-2'){
                 sh 'sls deploy -v'
-                  }
+                  // }
                     }
         }
         
