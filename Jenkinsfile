@@ -57,19 +57,19 @@ pipeline {
 
         stage('serverless deploy') {
             steps{
-                   withAWS(credentials: '8058ad1c-fdf5-4ae4-b62d-a0127bcd6006', region:'ap-southeast-2'){
+                   withAWS(credentials: '461f9b14-52bf-4989-8852-9e0988783409', region:'ap-southeast-2'){
                 sh 'sls deploy -v'
                   }
                     }
         }
 
-        stage('serverless remove') {
-            steps{
-                   withAWS(credentials: '8058ad1c-fdf5-4ae4-b62d-a0127bcd6006', region:'ap-southeast-2'){
-                sh 'sls remove'
-                  }
-                    }
-        }
+        // stage('serverless remove') {
+        //     steps{
+        //            withAWS(credentials: '461f9b14-52bf-4989-8852-9e0988783409', region:'ap-southeast-2'){
+        //         sh 'sls remove'
+        //           }
+        //             }
+        // }
         
     //     stage('Terraform Init') {    //         steps{
     //             sh 'terraform init'
