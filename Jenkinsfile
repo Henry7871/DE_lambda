@@ -44,16 +44,16 @@ pipeline {
                                   }
         }      
                   
-        //  stage('create S3 bucket and upload files') {
-        //     steps{
-        //         // withAWS(credentials: '461f9b14-52bf-4989-8852-9e0988783409', region:'ap-southeast-2'){ 
-        //         sh 'aws s3api create-bucket --bucket=jr-de-project-gp5 --region=ap-southeast-2 --create-bucket-configuration LocationConstraint=ap-southeast-2'
-        //         sh 'aws s3api create-bucket --bucket=imba-gp5 --region=ap-southeast-2 --create-bucket-configuration LocationConstraint=ap-southeast-2'
-        //         sh 'aws s3 cp files/glue_job.py s3://imba-gp5/scripts/glue_job.py'
-        //         sh 'aws s3 cp files/confluent.zip s3://imba-gp5/confluent/confluent.zip'
-        //         // }
-        //           }
-        // }         
+         stage('create S3 bucket and upload files') {
+            steps{
+                withAWS(credentials: '8058ad1c-fdf5-4ae4-b62d-a0127bcd6006', region:'ap-southeast-2'){ 
+                sh 'aws s3api create-bucket --bucket=jr-de-project-gp5 --region=ap-southeast-2 --create-bucket-configuration LocationConstraint=ap-southeast-2'
+                sh 'aws s3api create-bucket --bucket=imba-gp5 --region=ap-southeast-2 --create-bucket-configuration LocationConstraint=ap-southeast-2'
+                sh 'aws s3 cp files/glue_job.py s3://imba-gp5/scripts/glue_job.py'
+                sh 'aws s3 cp files/confluent.zip s3://imba-gp5/confluent/confluent.zip'
+                }
+                  }
+        }         
 
         stage('serverless deploy') {
             steps{
