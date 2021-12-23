@@ -53,6 +53,14 @@ resource "aws_iam_role_policy_attachment" "basic" {
   policy_arn = "arn:aws:iam::aws:policy/AWSLambdaExecute"
   role       = "${aws_iam_role.lambda_exec.name}"
 }
+resource "aws_iam_role_policy_attachment" "sagemaker" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSageMakerFullAccess"
+  role       = "${aws_iam_role.lambda_exec.name}"
+}
+resource "aws_iam_role_policy_attachment" "dynamodb" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess"
+  role       = "${aws_iam_role.lambda_exec.name}"
+}
 
 
 resource "aws_lambda_function" "example" {

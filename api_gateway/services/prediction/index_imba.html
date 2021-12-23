@@ -15,7 +15,7 @@
              xhr.onload = function() {
                  var result = parseFloat(xhr.responseText);
                  var resultElement = document.getElementById('result');
-                 if (result > 0.1) {
+                 if (result > 0.006) {
                      resultElement.className = 'bg-danger';
                      resultElement.innerHTML = 'Customer is likely to buy this product!';
                  } else {
@@ -37,7 +37,7 @@
             <h1>Will this customer buy the product?</h1>
             <p>Enter the customer feature to find out...</p>
             <form method="POST"
-                  action="https://nfojda6wb7.execute-api.ap-southeast-2.amazonaws.com/prod"
+                  action="https://mdpqycd3lk.execute-api.ap-southeast-2.amazonaws.com/test"
                   onsubmit="return submitForm(this);" >                     <!-- HERE IS WHERE YOU NEED TO ENTER THE API URL -->
                 <div class="form-group">
                     <label for="review">Customer feature:</label>
