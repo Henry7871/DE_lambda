@@ -24,11 +24,42 @@ EOF
 
 }
 
+# Created Policy for IAM Role
+resource "aws_iam_policy" "policy"{
+  name = "lambda_function_s3"
+  description = "access to s3 bucket"
+  policy=<<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+      {
+          "Effect": "Allow",
+          "Action": [
+              "s3:*"
+          ],
+          "Resource": "arn:aws:s3:::${var.s3_bucket}"
+      }
+]
+}
+EOF
+}
+#Attached IAM Role and the new created Policy
+resource "aws_iam_role_policy_attachment" "lambda-attach" {
+  role       = "${aws_iam_role.lambda_exec.name}"
+  policy_arn = "${aws_iam_policy.policy.arn}"
+}
+
+resource "aws_iam_role_policy_attachment" "basic" {
+  policy_arn = "arn:aws:iam::aws:policy/AWSLambdaExecute"
+  role       = "${aws_iam_role.lambda_exec.name}"
+}
+
+
 resource "aws_lambda_function" "example" {
   function_name = "prediction"
 
   # The bucket name as created earlier with "aws s3api create-bucket"
-  s3_bucket = "backend-bucket-DE-grp5"
+  s3_bucket = var.s3_bucket
 
   # Change the version to be 1.0.0
   s3_key    = "v${var.app_version}/example.zip"

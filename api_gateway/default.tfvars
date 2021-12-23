@@ -1,9 +1,5 @@
-# app_version = "1.0.0"
-
-# access_key
-
-# secret_key
+app_version = "1.0.0"
 
 environment = "UAT"
 
-s3_bucket = "backend-bucket-DE-grp5"
+s3_bucket = "backend-bucket-de-grp5"

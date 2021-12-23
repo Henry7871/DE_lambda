@@ -12,7 +12,7 @@ pipeline {
                 echo 'set up s3 backend...${PROJECT}'
                 dir('./api_gateway/version_control'){
                     withCredentials([string(credentialsId: 'aws_access_key_DE', variable:'AWS_ACCESS_KEY'), string(credentialsId: 'aws_secret_key_DE', variable:'AWS_SECRET_KEY')]){
-                        //sh 'cd UAT && terraform destroy -var="access_key=${AWS_ACCESS_KEY}" -var="secret_key=${AWS_SECRET_KEY}" -auto-approve'
+                        //sh 'cd UAT && terraform destroy -var="access_key=${AWS_ACCESS_KEY}" -var="secret_key=${AWS_SECRET_KEY}"'
                         sh 'terraform init && terraform validate && terraform plan -var="access_key=${AWS_ACCESS_KEY}" -var="secret_key=${AWS_SECRET_KEY}"'
                         sh 'ls -ltra'
                         sh 'terraform apply -var="access_key=$AWS_ACCESS_KEY" -var="secret_key=$AWS_SECRET_KEY" -auto-approve > backend.txt'
@@ -36,6 +36,6 @@ pipeline {
                 }
             }        
                 
-    }       
+        }       
     
 }

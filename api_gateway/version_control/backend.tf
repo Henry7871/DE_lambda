@@ -1,33 +1,11 @@
 resource "aws_s3_bucket" "backend-bucket" {
-    bucket = "backend-bucket-DE-grp5"
-
+    bucket = "backend-bucket-de-grp5"
+    force_destroy = true
     versioning {
         enabled = true 
     }
 }
 
-resource "aws_iam_role" "backend-s3" {
-    name = "backend-s3"
-    assume_role_policy=<<EOF
-{
-    
-    "Version": "2012-10-17",
-    "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": "s3:ListBucket",
-      "Resource": "arn:aws:s3:::backend_s3"
-    },
-    {
-      "Effect": "Allow",
-      "Action": ["s3:GetObject", "s3:PutObject"],
-      "Resource": "arn:aws:s3:::backend-s3" 
-    }
-    ]
-    
-}
-EOF
-}
 
 resource "aws_dynamodb_table" "dynamodb-terraform-state-lock" {
   name         = "terraform-state-lock-dynamodb"
@@ -39,24 +17,23 @@ resource "aws_dynamodb_table" "dynamodb-terraform-state-lock" {
   }
 }
 
-resource "aws_iam_role" "backend-dynamodb" {
-    name = "backend-dynamodb"
+resource "aws_iam_role" "backend-s3" {
+    name = aws_s3_bucket.backend-bucket.id
     assume_role_policy=<<EOF
 {
     
     "Version": "2012-10-17",
     "Statement": [
     {
-      "Effect": "Allow",
-      "Action": [
-        "dynamodb:GetItem",
-        "dynamodb:PutItem",
-        "dynamodb:DeleteItem"
-      ],
-      "Resource": "arn:aws:dynamodb:*:*:table/terraform-state-lock-dynamodb"
+     "Action": "sts:AssumeRole",
+     "Principal": {
+       "Service": "lambda.amazonaws.com"
+     },
+     "Effect": "Allow",
+     "Sid": ""
     }
-  ]
+    ]
+    
 }
-
 EOF
 }

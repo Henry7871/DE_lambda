@@ -24,3 +24,14 @@ __cache__
 node_modules
 package-lock.json
 .DS_Store
+.terraform.lock.hcl
+.terraform/
+services/prediction/prediction.zip
+terraform.tfstate
+terraform.tfstate.backup
+version_control/.terraform.lock.hcl
+version_control/.terraform/
+version_control/terraform.tfstate
+version_control/terraform.tfstate.backup
+version_control/variables.tf
+services/prediction/prediction.zip
