@@ -22,8 +22,6 @@ pipeline {
         
         stage('Serverless Plugin'){
             steps{ 
-                      // // sh 'ls -a'
-                      // // // sh 'cat .env'
                       // sh 'node -v'   
                       // sh 'npm -v'
                       // sh 'pip3 --version'
