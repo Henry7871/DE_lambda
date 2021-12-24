@@ -34,4 +34,3 @@ version_control/.terraform/
 version_control/terraform.tfstate
 version_control/terraform.tfstate.backup
 version_control/variables.tf
-services/prediction/prediction.zip

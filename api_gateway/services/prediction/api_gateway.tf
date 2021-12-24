@@ -61,4 +61,3 @@ resource "aws_api_gateway_deployment" "example" {
   stage_name  = "test"
 }
 
-# Terraform apply and check https://console.aws.amazon.com/apigateway/home?region=ap-southeast-2

@@ -12,6 +12,7 @@ data "archive_file" "lambda_my_function" {
   output_path      = "${path.module}/prediction.zip"
 }
 
+
 resource "aws_s3_bucket_object" "object" {
   bucket = var.s3_bucket
   key    = "v${var.app_version}/example.zip"
