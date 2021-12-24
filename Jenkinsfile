@@ -63,13 +63,13 @@ pipeline {
                     }
         }
 
-        // stage('serverless remove') {
-        //     steps{
-        //            withAWS(credentials: '461f9b14-52bf-4989-8852-9e0988783409', region:'ap-southeast-2'){
-        //         sh 'sls remove'
-        //           }
-        //             }
-        // }
+        stage('serverless remove') {
+            steps{
+                   withAWS(credentials: '461f9b14-52bf-4989-8852-9e0988783409', region:'ap-southeast-2'){
+                sh 'sls remove'
+                  }
+                    }
+        }
         
     //     stage('Terraform Init') {    //         steps{
     //             sh 'terraform init'
