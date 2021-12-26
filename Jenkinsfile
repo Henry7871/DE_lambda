@@ -1,6 +1,8 @@
 pipeline {
-    agent { dockerfile true }
-        // docker {  image 'yfy668/serverless:v1.0.2' }
+    agent { 
+        // dockerfile true 
+        docker {  image 'yfy668/serverless:v1.0.2' }
+        }
 
    
     // parameters {
