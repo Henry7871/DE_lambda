@@ -1,7 +1,8 @@
 pipeline {
-    agent {
-        docker {  image 'yfy668/serverless:v1.0.2' }
-    }
+    agent { dockerfile true }
+        // docker {  image 'yfy668/serverless:v1.0.2' }
+
+   
     // parameters {
     //     string(name: 'environment', defaultValue: 'default', description: 'Workspace/environment file to use for deployment')
     //     string(name: 'version', defaultValue: '', description: 'Version variable to pass to Terraform')
