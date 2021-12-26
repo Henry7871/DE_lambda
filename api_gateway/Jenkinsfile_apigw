@@ -28,7 +28,7 @@ pipeline {
                 dir('./api_gateway'){
                     withCredentials([string(credentialsId: 'aws_access_key_DE', variable:'AWS_ACCESS_KEY'), string(credentialsId: 'aws_secret_key_DE', variable:'AWS_SECRET_KEY')]){
                         //sh 'cd UAT && terraform destroy -var="access_key=${AWS_ACCESS_KEY}" -var="secret_key=${AWS_SECRET_KEY}" -var="app_version=${currentBuild.number}" -var-file=default.tfvars -auto-approve'
-                        sh "terraform init && terraform validate && terraform plan -var='access_key=${AWS_ACCESS_KEY}' -var='secret_key=${AWS_SECRET_KEY}' -var='app_version=${currentBuild.number}' -var-file=default.tfvars"
+                        sh "terraform init -force-copy && terraform validate && terraform plan -var='access_key=${AWS_ACCESS_KEY}' -var='secret_key=${AWS_SECRET_KEY}' -var='app_version=${currentBuild.number}' -var-file=default.tfvars"
                         sh 'ls -ltra'
                         sh "terraform apply -var='access_key=${AWS_ACCESS_KEY}' -var='secret_key=${AWS_SECRET_KEY}' -var='app_version=${currentBuild.number}' -var-file=default.tfvars -auto-approve > aws.txt"
                     }
