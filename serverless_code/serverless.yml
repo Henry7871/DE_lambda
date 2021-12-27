@@ -10,7 +10,7 @@ provider:
   name: aws
   runtime: python3.8
   region: ${env:region}
-  profile: ${env:Profile_name}
+  # profile: ${env:Profile_name}
   stage: ${env:stage}
   deploymentBucket:
     name: ${env:deploymentBucket}
