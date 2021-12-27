@@ -27,25 +27,25 @@ pipeline {
         //           }
         // }         
 
-        // stage('serverless deploy') {
-        //     steps{
-        //         dir('./serverless_code'){
-        //              withAWS(credentials: '461f9b14-52bf-4989-8852-9e0988783409', region:'ap-southeast-2'){
-        //                 sh 'sls deploy -v'
-        //             }
-        //         }
-        //     }
-        // }
-
-        stage('serverless remove') {
+        stage('serverless deploy') {
             steps{
                 dir('./serverless_code'){
-                   withAWS(credentials: '461f9b14-52bf-4989-8852-9e0988783409', region:'ap-southeast-2'){
-                sh 'sls remove'
-                  }
+                     withAWS(credentials: '461f9b14-52bf-4989-8852-9e0988783409', region:'ap-southeast-2'){
+                        sh 'sls deploy -v'
+                    }
                 }
             }
         }
+
+        // stage('serverless remove') {
+        //     steps{
+        //         dir('./serverless_code'){
+        //            withAWS(credentials: '461f9b14-52bf-4989-8852-9e0988783409', region:'ap-southeast-2'){
+        //         sh 'sls remove'
+        //           }
+        //         }
+        //     }
+        // }
         
     //     stage('Terraform Init') {    //         steps{
     //             sh 'terraform init'
