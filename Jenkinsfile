@@ -41,6 +41,7 @@ pipeline {
                       // sh 'npm update -g serverless'
                       // sh 'serverless -v'
                       sh 'cd ./serverless_code'
+                      sh 'ls'
                       sh 'sls plugin install -n serverless-python-requirements'
                       sh 'npm i -D serverless-dotenv-plugin '
                       sh 'npm install --save-dev serverless-iam-roles-per-function'
