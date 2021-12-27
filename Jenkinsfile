@@ -40,20 +40,21 @@ pipeline {
                       // sh 'npm install -g serverless'
                       // sh 'npm update -g serverless'
                       // sh 'serverless -v'
+                      sh 'cd ./serverless_code'
                       sh 'sls plugin install -n serverless-python-requirements'
                       sh 'npm i -D serverless-dotenv-plugin '
                       sh 'npm install --save-dev serverless-iam-roles-per-function'
-                      // sh 'pip3 install awscli --upgrade'
+                      // sh 'pip3 install awscli --upgrade'  
                                   }
         }      
                   
         //  stage('create S3 bucket and upload files') {
         //     steps{
         //         withAWS(credentials: '461f9b14-52bf-4989-8852-9e0988783409', region:'ap-southeast-2'){ 
-        //         sh 'aws s3api create-bucket --bucket=jr-de-project-cy1 --region=ap-southeast-2 --create-bucket-configuration LocationConstraint=ap-southeast-2'
-        //         sh 'aws s3api create-bucket --bucket=imba-cy1 --region=ap-southeast-2 --create-bucket-configuration LocationConstraint=ap-southeast-2'
-        //         sh 'aws s3 cp files/glue_job.py s3://imba-cy1/scripts/glue_job.py'
-        //         sh 'aws s3 cp files/confluent.zip s3://imba-cy1/confluent/confluent.zip'
+        //         sh 'aws s3api create-bucket --bucket=jr-de-project-uat --region=ap-southeast-2 --create-bucket-configuration LocationConstraint=ap-southeast-2'
+        //         sh 'aws s3api create-bucket --bucket=imba-uat --region=ap-southeast-2 --create-bucket-configuration LocationConstraint=ap-southeast-2'
+        //         sh 'aws s3 cp /serverless_code/files/glue_job.py s3://imba-uat/scripts/glue_job.py'
+        //         sh 'aws s3 cp /serverless_code/files/confluent.zip s3://imba-uat/confluent/confluent.zip'
         //         }
         //           }
         // }         
