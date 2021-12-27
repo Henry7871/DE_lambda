@@ -16,36 +16,36 @@ pipeline {
                                   }  
         }      
                   
-        //  stage('create S3 bucket and upload files') {
-        //     steps{
-        //         withAWS(credentials: '461f9b14-52bf-4989-8852-9e0988783409', region:'ap-southeast-2'){ 
-        //         sh 'aws s3api create-bucket --bucket=jr-de-project-prod --region=ap-southeast-2 --create-bucket-configuration LocationConstraint=ap-southeast-2'
-        //         sh 'aws s3api create-bucket --bucket=imba-prod --region=ap-southeast-2 --create-bucket-configuration LocationConstraint=ap-southeast-2'
-        //         sh 'aws s3 cp ./serverless_code/files/glue_job.py s3://imba-prod/scripts/glue_job.py'
-        //         sh 'aws s3 cp ./serverless_code/files/confluent.zip s3://imba-prod/confluent/confluent.zip'
-        //         }
-        //           }
-        // }         
+         stage('create S3 bucket and upload files') {
+            steps{
+                withAWS(credentials: '461f9b14-52bf-4989-8852-9e0988783409', region:'ap-southeast-2'){ 
+                // sh 'aws s3api create-bucket --bucket=jr-de-project-prod --region=ap-southeast-2 --create-bucket-configuration LocationConstraint=ap-southeast-2'
+                // sh 'aws s3api create-bucket --bucket=imba-prod --region=ap-southeast-2 --create-bucket-configuration LocationConstraint=ap-southeast-2'
+                sh 'aws s3 cp ./serverless_code/files/glue_job.py s3://imba-prod/scripts/glue_job.py'
+                sh 'aws s3 cp ./serverless_code/files/confluent.zip s3://imba-prod/confluent/confluent.zip'
+                }
+                  }
+        }         
 
-        // stage('serverless deploy') {
-        //     steps{
-        //         dir('./serverless_code'){
-        //              withAWS(credentials: '461f9b14-52bf-4989-8852-9e0988783409', region:'ap-southeast-2'){
-        //                 sh 'sls deploy -v'
-        //             }
-        //         }
-        //     }
-        // }
-
-        stage('serverless remove') {
+        stage('serverless deploy') {
             steps{
                 dir('./serverless_code'){
-                   withAWS(credentials: '461f9b14-52bf-4989-8852-9e0988783409', region:'ap-southeast-2'){
-                sh 'sls remove'
-                  }
+                     withAWS(credentials: '461f9b14-52bf-4989-8852-9e0988783409', region:'ap-southeast-2'){
+                        sh 'sls deploy -v'
+                    }
                 }
             }
         }
+
+        // stage('serverless remove') {
+        //     steps{
+        //         dir('./serverless_code'){
+        //            withAWS(credentials: '461f9b14-52bf-4989-8852-9e0988783409', region:'ap-southeast-2'){
+        //         sh 'sls remove'
+        //           }
+        //         }
+        //     }
+        // }
         
     //     stage('Terraform Init') {    //         steps{
     //             sh 'terraform init'
