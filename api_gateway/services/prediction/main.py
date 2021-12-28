@@ -3,7 +3,8 @@ import boto3
 dynamodb_resource = boto3.resource('dynamodb')
 table = dynamodb_resource.Table('dynamodb_table_gp5')
 ssm = boto3.client('ssm')
-endPoint = ssm.get_parameter(Name='model_endpoint')
+endPoint = ssm.get_parameter(Name='model_endpoint')['Parameter']['Value']
+# print(endPoint)
 
 
 
