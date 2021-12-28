@@ -31,7 +31,7 @@ def main():
           
     # convert glue dynamic dataframe to spark dataframe
     df_spark = df.toDF()
-    df_spark.repartition(1).write.mode('overwrite').format('csv').save("s3://imba-xqf/output", header = 'true')
+    df_spark.repartition(1).write.mode('overwrite').format('csv').save("s3://imba-prod1/output", header = 'true')
     
 if __name__ == '__main__':
     main()
