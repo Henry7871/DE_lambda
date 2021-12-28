@@ -68,7 +68,7 @@ resource "aws_iam_role_policy_attachment" "ssm-parameter" {
 resource "aws_ssm_parameter" "model_endpoint" {
   name  = "model_endpoint"
   type  = "String"
-  value = ""
+  value = "model_endpoint"
 }
 
 resource "aws_lambda_function" "example" {
