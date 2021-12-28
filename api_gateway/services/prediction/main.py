@@ -2,6 +2,9 @@ import boto3
 
 dynamodb_resource = boto3.resource('dynamodb')
 table = dynamodb_resource.Table('dynamodb_table_gp5')
+ssm = boto3.client('ssm')
+endPoint = ssm.get_parameter(Name='model_endpoint')
+
 
 
 def lambda_handler(event, context):
@@ -9,23 +12,23 @@ def lambda_handler(event, context):
     # body = event['body']
     body = str(event['body'])
 
-    print(body)
+    # print(body)
     user_id = body.split(',')[0]
     product_id = body.split(',')[1]
 
-    print(user_id)
-    print(product_id)
+    # print(user_id)
+    # print(product_id)
 
     response = table.get_item(
         Key={'user_id': user_id, 'product_id': product_id})
-    print(response)
+    # print(response)
     body = response['Item']['feature']
 
     # The SageMaker runtime is what allows us to invoke the endpoint that we've created.
     runtime = boto3.Session().client('sagemaker-runtime')
 
     # Now we use the SageMaker runtime to invoke our endpoint, sending the review we were given
-    response = runtime.invoke_endpoint(EndpointName='xgboost-2021-12-28-04-10-20-447',  # The name of the endpoint we created
+    response = runtime.invoke_endpoint(EndpointName=endPoint,  # The name of the endpoint we created
                                        ContentType='text/csv',                 # The data format that is expected
                                        Body=body
                                        )
